@@ -34,6 +34,7 @@ namespace ObjectDetection.Views
         private async void ChooseButton_Clicked(object sender, EventArgs e)
         {
             try{
+                
                 if (CrossMedia.Current.IsPickPhotoSupported)
                 {
                     MediaFile photo = await CrossMedia.Current.PickPhotoAsync();
