@@ -18,6 +18,7 @@
                 </Grid.RowDefinitions>
                 <Image x:Name="PhotoImage" />
                 <Button x:Name="CameraButton" Text="Take Photo" Grid.Row="1" />
+                <Button x:Name="ChooseButton" Text="Choose Photo" Grid.Row="2" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

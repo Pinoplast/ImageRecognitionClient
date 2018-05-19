@@ -6,78 +6,33 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using ObjectDetection.Models;
+using Xamarin.Forms;
 
 namespace ObjectDetection.Services
 {
-    public class AzureDataStore : IDataStore<Item>
+    public class DataService : IDataService
     {
         HttpClient client;
-        IEnumerable<Item> items;
 
-        public AzureDataStore()
+        public DataService()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
-
-            items = new List<Item>();
+            //client.BaseAddress = new Uri($"{App.AzureBackendUrl}/");
         }
 
-        public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
+        public ResponseEntity UploadImage(Image image)
         {
-            if (forceRefresh && CrossConnectivity.Current.IsConnected)
-            {
-                var json = await client.GetStringAsync($"api/item");
-                items = await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<Item>>(json));
-            }
-
-            return items;
+            throw new Exception();
         }
 
-        public async Task<Item> GetItemAsync(string id)
+        public ResponseEntity GetImageById(string id)
         {
-            if (id != null && CrossConnectivity.Current.IsConnected)
-            {
-                var json = await client.GetStringAsync($"api/item/{id}");
-                return await Task.Run(() => JsonConvert.DeserializeObject<Item>(json));
-            }
-
-            return null;
+            throw new Exception();       
         }
 
-        public async Task<bool> AddItemAsync(Item item)
+        public ResponseEntity GetImages()
         {
-            if (item == null || !CrossConnectivity.Current.IsConnected)
-                return false;
-
-            var serializedItem = JsonConvert.SerializeObject(item);
-
-            var response = await client.PostAsync($"api/item", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
-
-            return response.IsSuccessStatusCode;
-        }
-
-        public async Task<bool> UpdateItemAsync(Item item)
-        {
-            if (item == null || item.Id == null || !CrossConnectivity.Current.IsConnected)
-                return false;
-
-            var serializedItem = JsonConvert.SerializeObject(item);
-            var buffer = Encoding.UTF8.GetBytes(serializedItem);
-            var byteContent = new ByteArrayContent(buffer);
-
-            var response = await client.PutAsync(new Uri($"api/item/{item.Id}"), byteContent);
-
-            return response.IsSuccessStatusCode;
-        }
-
-        public async Task<bool> DeleteItemAsync(string id)
-        {
-            if (string.IsNullOrEmpty(id) && !CrossConnectivity.Current.IsConnected)
-                return false;
-
-            var response = await client.DeleteAsync($"api/item/{id}");
-
-            return response.IsSuccessStatusCode;
+            throw new Exception();        
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ObjectDetection
             if (UseMockDataStore)
                 DependencyService.Register<MockDataStore>();
             else
-                DependencyService.Register<AzureDataStore>();
+                DependencyService.Register<DataService>();
 
             MainPage = new MainPage();
         }
